@@ -1,6 +1,7 @@
-from typing import Iterable
+from typing import Iterable, Dict
 from src.core.node import Node
 from src.core.dist import Dist
+from bitarray import bitarray
 
 class HoffmanTree:
 
@@ -23,14 +24,14 @@ class HoffmanTree:
             list_of_nodes.append(merged_node)
         return list_of_nodes.pop()
 
-    def get_encoding_table(self) -> dict:
+    def get_encoding_table(self) -> Dict[str, bitarray]:
         encoding_table = {}
 
         def _dfs(tree:Node, code:str) -> None:
             if tree.is_leaf_node():
                 # Must handle edge case where tree is only root node
                 code = code if code else "0"
-                encoding_table[tree.symbol] = code
+                encoding_table[tree.symbol] = bitarray(code)
                 return
             if tree.left is not None:
                 _dfs(tree.left, code + "0")

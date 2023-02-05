@@ -1,11 +1,11 @@
-from lossless.encoders.base_encoder import Encoder, Symbol
-from core.tree import HoffmanTree
-from core.dist import Dist
+from src.lossless.encoders.base_encoder import Encoder, Symbol
+from src.core.tree import HoffmanTree
+from src.core.dist import Dist
 
 class HuffmanEncodingException(Exception):
     def __init__(self, symbol:Symbol):
         message = f"Huffman Encoding Error: Unable to encode symbol: {symbol}"
-        super().__init__(message=message)
+        super().__init__(message)
 
 class HuffmanEncoder(Encoder):
 

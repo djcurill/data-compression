@@ -1,26 +1,28 @@
 from bitarray import bitarray
-from core.tree import HoffmanTree
+from src.core.tree import HoffmanTree
 from src.lossless.decoders.base_decoder import Decoder, Symbol
-from src.core.dist import Dist
 from typing import Tuple
+
+class HuffmanDecodingException(Exception):
+    
+    def __init__(self):
+        super().__init__("Unable to decode sequence of bits.")
 
 class HuffmanDecoder(Decoder):
 
-    def __init__(self, dist:Dist):
-        self.tree = HoffmanTree(dist=dist)
+    def __init__(self, tree:HoffmanTree):
+        assert tree.root is not None, "Must have non-null root to perform Huffman decoding"
+        self.root = tree.root
 
     def __call__(self, bits:bitarray, start:int=0) -> Tuple[Symbol, int]:
-        node = self.tree.root
-        if node is None:
-            raise ValueError()
-
+        if start >= len(bits):
+            return None
         pos = start
-        while not node.is_leaf_node() and pos < len(bits):
+        node = self.root
+        while not node.is_leaf_node():
             bit = bits[pos]
             node = node.left if bit == 0 else node.right
             pos += 1
-            if node is None:
-                raise ValueError()
         return node.symbol, pos
 
 
