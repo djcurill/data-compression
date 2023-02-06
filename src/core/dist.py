@@ -1,7 +1,7 @@
 from collections import defaultdict
 
-class Dist(dict):
 
+class Dist(dict):
     def __init__(self, data=None):
         dist = self.create_distribution(data if data else [])
         self.total = len(dist)
@@ -13,4 +13,4 @@ class Dist(dict):
         n = len(data)
         for o in data:
             dist[o] += 1
-        return {key:val/n for key,val in dist.items()}
+        return {key: val / n for key, val in dist.items()}

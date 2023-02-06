@@ -1,16 +1,16 @@
 from src.lossless.decoders.huffman_decoder import HuffmanDecoder
 from src.core.dist import Dist
-from src.core.tree import HoffmanTree
+from src.core.tree import HuffmanTree
 from unittest import TestCase
 from bitarray import bitarray
 
-class TestHuffmanDecoder(TestCase):
 
+class TestHuffmanDecoder(TestCase):
     def setUp(self) -> None:
-        self.tree = HoffmanTree(Dist("AAABBC"))
-        self.encoded_bits = bitarray("111010100") #
+        self.tree = HuffmanTree(Dist("AAABBC"))
+        self.encoded_bits = bitarray("111010100")  #
         return super().setUp()
-    
+
     def test_decode_symbol_at_start(self):
         decoder = HuffmanDecoder(tree=self.tree)
         symbol, pos = decoder(self.encoded_bits, start=0)

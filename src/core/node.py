@@ -3,6 +3,7 @@ from typing import Union
 
 Symbol = Union[str, int]
 
+
 @dataclass
 class Node:
     count: int

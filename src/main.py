@@ -1,7 +1,7 @@
-from src.lossless.encoders.hoffman_encoder import HuffmanEncoder
+from src.lossless.encoders.huffman_encoder import HuffmanEncoder
 from src.lossless.decoders.huffman_decoder import HuffmanDecoder
 from src.core.dist import Dist
-from src.core.tree import HoffmanTree
+from src.core.tree import HuffmanTree
 from src.compress import compress_bytes
 from src.decompress import decompress
 from src.utils import generate_random_data
@@ -13,7 +13,7 @@ import ast
 def huffman_lossless(data) -> None:
     # Encode data
     dist = Dist(data)
-    tree = HoffmanTree(dist)
+    tree = HuffmanTree(dist)
     encoder = HuffmanEncoder(tree=tree)
     decoder = HuffmanDecoder(tree=tree)
     compressed_bits = compress_bytes(data, encoder)

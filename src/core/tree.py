@@ -3,17 +3,19 @@ from src.core.node import Node
 from src.core.dist import Dist
 from bitarray import bitarray
 
-class HoffmanTree:
 
-    def __init__(self, dist:Dist):
+class HuffmanTree:
+    def __init__(self, dist: Dist):
         self.root = self.create_tree(dist)
         self._encoding_table = {}
 
     @staticmethod
-    def create_tree(dist:Iterable) -> Node:
+    def create_tree(dist: Iterable) -> Node:
         if not dist:
             return
-        list_of_nodes = [Node(symbol=symbol, count=count) for symbol,count in dist.items()]
+        list_of_nodes = [
+            Node(symbol=symbol, count=count) for symbol, count in dist.items()
+        ]
         while len(list_of_nodes) > 1:
             list_of_nodes = sorted(list_of_nodes, reverse=True)
             n1 = list_of_nodes.pop()
@@ -27,7 +29,7 @@ class HoffmanTree:
     def get_encoding_table(self) -> Dict[str, bitarray]:
         encoding_table = {}
 
-        def _dfs(tree:Node, code:str) -> None:
+        def _dfs(tree: Node, code: str) -> None:
             if tree.is_leaf_node():
                 # Must handle edge case where tree is only root node
                 code = code if code else "0"
@@ -45,15 +47,17 @@ class HoffmanTree:
     def max_depth(self) -> int:
         global max_depth
         max_depth = 0
-        def _dfs(tree:Node, level:int) -> None:
+
+        def _dfs(tree: Node, level: int) -> None:
             if tree.is_leaf_node():
                 global max_depth
                 max_depth = max(level, max_depth)
-                return 
+                return
             if tree.left is not None:
                 _dfs(tree.left, level + 1)
             if tree.right is not None:
                 _dfs(tree.right, level + 1)
+
         if self.root is not None:
             _dfs(self.root, 0)
         return max_depth

@@ -1,8 +1,8 @@
 from src.core.node import Node
 from unittest import TestCase
 
-class TestNode(TestCase):
 
+class TestNode(TestCase):
     def test_equals(self):
         a = Node(1, "a")
         b = Node(1, "a")
