@@ -153,18 +153,18 @@ def get_encoding_table(self) -> Dict[str, bitarray]:
 ---
 **Step 5**: Encoding Algorithm
 
-Source code: [src/lossless/encoders/huffman_encoder.py](https://github.com/djcurill/data-compression/blob/main/src/lossless/encoders/hoffman_encoder.py)
+Source code: [src/lossless/encoders/huffman_encoder.py](https://github.com/djcurill/data-compression/blob/main/src/lossless/encoders/huffman_encoder.py)
 
 This algorithm is really simple. Just take a symbol and map it to its `bitarray` representation.
 
 Example:
 
 ```python
->>> from src.lossless.encoders.hoffman_encoder import HuffmanEncoder
->>> from src.core.tree import HoffmanTree
+>>> from src.lossless.encoders.huffman_encoder import HuffmanEncoder
+>>> from src.core.tree import HuffmanTree
 >>> from src.core.dist import Dist
 >>> dist = Dist([1,1,1,1,2,2,2,3])
->>> tree = HoffmanTree(dist)
+>>> tree = HuffmanTree(dist)
 >>> encoder = HuffmanEncoder(tree)
 >>> encoder(1)
 bitarray('1')
@@ -180,7 +180,7 @@ Decoding a sequence of bits is quite elegant with a Huffman Tree. Given a sequen
 ```python
 class HuffmanDecoder(Decoder):
 
-    def __init__(self, tree:HoffmanTree):
+    def __init__(self, tree:HuffmanTree):
         assert tree.root is not None, "Must have non-null root to perform Huffman decoding"
         self.root = tree.root
 
@@ -210,6 +210,22 @@ The size after compression is the addition of:
 2. The number of bytes to represent the encoding table
 
 ## Running the algorithm
+
+This environment uses Python 3.9.
+
+To setup the environment run the following commands:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Ensure all tests are passing first:
+
+```bash
+make test
+```
 
 To run the code using the example provided in the problem statement:
 

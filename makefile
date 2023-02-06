@@ -1,11 +1,6 @@
+SHELL := /bin/bash
 PROB=0.9
 SIZE=100
-
-activate-env:
-	source .venv/bin/activate
-
-deactivate-env:
-	deactivate
 	
 test:
 	pytest
