@@ -6,3 +6,6 @@ deactivate-env:
 	
 test:
 	pytest
+
+run:
+	python3 -m src.main

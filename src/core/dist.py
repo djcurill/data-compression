@@ -14,4 +14,3 @@ class Dist(dict):
         for o in data:
             dist[o] += 1
         return {key:val/n for key,val in dist.items()}
-

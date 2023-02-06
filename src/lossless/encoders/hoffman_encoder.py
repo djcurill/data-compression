@@ -1,6 +1,5 @@
 from src.lossless.encoders.base_encoder import Encoder, Symbol
 from src.core.tree import HoffmanTree
-from src.core.dist import Dist
 
 class HuffmanEncodingException(Exception):
     def __init__(self, symbol:Symbol):
@@ -9,8 +8,8 @@ class HuffmanEncodingException(Exception):
 
 class HuffmanEncoder(Encoder):
 
-    def __init__(self, dist:Dist):
-        tree = HoffmanTree(dist)
+    def __init__(self, tree:HoffmanTree):
+        self.tree = tree
         self.encoding_table = tree.get_encoding_table()
 
     def __call__(self, symbol: Symbol) -> str:
