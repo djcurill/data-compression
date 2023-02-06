@@ -44,7 +44,7 @@ Two popular algorithms I found that could be used to compress the data in a loss
 **Pros**
 
 - Simple to implement
-- Performs better with greater entropy (i.e. more random distribution)
+- Performs better with greater entropy (i.e. more random distribution) in comparison to Huffman Encoding
 
 **Cons**
 
@@ -55,14 +55,14 @@ Two popular algorithms I found that could be used to compress the data in a loss
 **Pros**
 
 - Performs better given repeating values
-- Will perform similar to fixed encoding given large input sample size (will derive fixed encoding as n increases)
+- Will perform similar to fixed encoding given large input sample size 
 
 **Cons**
 
 - More complex to implement
 - Performance will level out as sample size becomes large enough to include the full population (0-127)
 
-The huffman enconding technique offers more flexibility and will likely outperform the Fixed length encoding method should the data be much more likely to be skewed. This algorithm will not perform well if the distribution of data turns out to be uniform (i.e. a high degree of entropy).
+The huffman encoding technique offers more flexibility and will likely outperform the Fixed length encoding method should the data distribution be skewed. This algorithm will not perform similar to the Fixed Length encoding if the distribution is uniformly random (i.e. a high degree of entropy).
 
 ## How Huffman Enconding Works
 
