@@ -66,7 +66,7 @@ The huffman enconding technique offers more flexibility and will likely outperfo
 
 ## How Huffman Enconding Works
 
-Huffman encoding takes advantage of repeating values. Given a sequence of bytes, any bytes that occur more frequently than other, will be assigned an encoding that uses a smaller number of bits. More rare occurences will use more bits, meaning they take up more space but occur less frequently.
+Huffman encoding takes advantage of repeating values. Given a sequence of bytes, any bytes that occur more frequently than others, will be assigned an encoding that uses a smaller number of bits. More rare occurences will use more bits, meaning they take up more space but occur less frequently.
 
 This algorithm can be broken up into steps:
 
@@ -126,9 +126,9 @@ Create a huffman given a distribution. This can be broken into steps:
 
 Source code: [src/core/tree.py](https://github.com/djcurill/data-compression/blob/main/src/core/tree.py)
 
-An encoding table will map a `symbol` to its bit representation. In python, the [bitarray library](https://pypi.org/project/bitarray/) provides helper methods to represent objects as bits. The bitarray representation of a symbol is determined by the number of `lefts` and `rights` taken to navigate from the `root` node to a leaf node. This algorithm ensures that each symbol as a unique prefix when decoding (more on this later).
+An encoding table will map a `symbol` to its bit representation. In python, the [bitarray library](https://pypi.org/project/bitarray/) provides helper methods to represent objects as bits. The bitarray representation of a symbol is determined by the number of `lefts` and `rights` taken to navigate from the `root` node to a leaf node in a Huffman Tree. This algorithm ensures that each symbol has a unique prefix so that there are no issues when decoding.
 
-To create an encoding table from a Huffman tree, you take the all the leaf nodes and add their `symbol -> bits` mapping to a dictionary. This can be done using a simple depth first search algorithm. Source code has been copy and pasted here.
+To create an encoding table from a Huffman tree, you take the all the leaf nodes and transform it into a dictionary that maps `symbol` to `bits`. This can be done using a simple depth first search algorithm. Source code has been copy and pasted below:
 
 ```python
 def get_encoding_table(self) -> Dict[str, bitarray]:
@@ -175,7 +175,7 @@ bitarray('1')
 
 Source code: [src/lossless/decoders/huffman_decoder.py](https://github.com/djcurill/data-compression/blob/main/src/lossless/decoders/huffman_decoder.py)
 
-Decoding a sequence of bits is quite elegant with a Huffman Tree. Given a sequence of bits, you iteratively traverse a vit sequence and navigate the Huffman Tree until a leaf node has been reached. If the bit is `0` go the left child node. If the bit is `1`, go to the right child node. Each `symbol -> bitarray` mapping is guaranteed to be unique since the tree was constructed using the optimal merge pattern. That means no two symbols can have the same prefix of bits. Below is the implementation of the decoding algorithm:
+Decoding a sequence of bits is quite elegant with a Huffman Tree. Given a sequence of bits, you iteratively traverse a bit sequence and navigate the Huffman Tree until a leaf node has been reached. If the bit is `0` go the left child node. If the bit is `1`, go to the right child node. Each `symbol -> bitarray` mapping is guaranteed to be unique since the tree was constructed using the optimal merge pattern. That means no two symbols can have the same prefix of bits. Below is the implementation of the decoding algorithm:
 
 ```python
 class HuffmanDecoder(Decoder):
@@ -202,12 +202,17 @@ class HuffmanDecoder(Decoder):
 
 See [main.py](https://github.com/djcurill/data-compression/blob/main/src/main.py) for the full implementation.
 
-The compression performance will be determine by computing the number of bytes before and after compression and than calculting the percent the intial data size was reduced.
+The compression performance will be determined by computing the number of bytes before and after compression and then calculating the compression ratio.
 
 The size after compression is the addition of:
 
 1. The number of bytes to represent compressed data and,
 2. The number of bytes to represent the encoding table
+
+The compression ratio is calculated by:
+```python
+(1 - (after / before)) * 100
+```
 
 ## Running the algorithm
 
@@ -221,7 +226,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Ensure all tests are passing first:
+Ensure all tests are passing:
 
 ```bash
 make test
